@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="C:\Users\y-kawazoe\Documents\個人用\github_repositories\personal_app\summarize_minutes_app\gemini"
+VIRTUAL_ENV="C:\Users\y-kawazoe\Documents\個人用\github_repositories\personal_app\summarize_meeting_minutes_app\gemini"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
