@@ -30,12 +30,17 @@ def main():
 
     try:
         # Set the title and description
-        st.title("Creating Meeting Minutes from Audio")
+        st.title("📋 Creating Meeting Minutes from Audio")
 
         # set Gemini API
         GOOGLE_API_KEY = st.sidebar.text_input("Input your Google AI Studio API", type="password")
 
         genai.configure(api_key=GOOGLE_API_KEY)
+
+        # Input fields of language
+        language_options = ['English', 'Spanish', 'French', 'German', 'Italian', 'Chinese', 'Japanese', 'Korean']  # Add more languages as needed
+        original_language = st.selectbox(label="Select Original Language", options=language_options)
+        translating_language = st.selectbox(label="Select Translating Language", options=language_options)
 
         # File uploader widget
         uploaded_file = st.file_uploader("Upload Audio File", type=["wav", "mp3", "ogg", "m4a"])
@@ -93,9 +98,11 @@ def transcribe_audio_file(audio_file):
     try:
         # upload audio file by using File API
         audio_file = genai.upload_file(audio_file)
-        prompt = """
-      You are a professional transcriber.
+        prompt = f"""
+      You are a professional transcriber between {original_language} and {translating_language}.
       I would like you to transcribe this file which recorded a meeting by following format as a markdown.
+      Please remember the input audio is {original_language} but output must be in {translating_language}.
+      
 
       ### caution
       - If a speaker changes, please indent the next sentence.
@@ -125,7 +132,7 @@ def summary_prompt_response(transcription):
         chat = model.start_chat(enable_automatic_function_calling=True)
         prompt = f"""
         ### request
-        Based on the meeting minutes below, please do the two things and return as markdown by following format:
+        Based on the meeting minutes below, please do the two things and return as markdown by following format in the same language as meeting minutes:
         1. Create a bulleted summary for the minutes. The summary should include important points.
         2. Create a TODO list. If there are none, do not create a TODO list.
 
