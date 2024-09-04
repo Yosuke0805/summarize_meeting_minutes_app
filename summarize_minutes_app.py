@@ -58,6 +58,8 @@ def main():
             submitted = st.form_submit_button('Start creating summary')
 
             if submitted:
+                if not GOOGLE_API_KEY:
+                    st.warning('⚠️Please enter your Google AI Studio API on the sidebar.', icon='⚠') 
                 # save uploaded audio file as tmp file
                 with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as temp_file:
                     temp_file.write(uploaded_file.read())
