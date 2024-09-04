@@ -49,7 +49,7 @@ def main():
         if uploaded_file:
             if uploaded_file is not None:
                 st.subheader('Uploaded file detail')
-                file_details = {'FileName': uploaded_file.name, 'FileType': uploaded_file.type, 'FileSize(MB)': uploaded_file.size /1024}
+                file_details = {'FileName': uploaded_file.name, 'FileType': uploaded_file.type, 'FileSize(MB)': round(uploaded_file.size /1024,3)}
                 st.write(file_details)
             else:
                 st.error("There is no uploaded file!!", icon="🚨")
