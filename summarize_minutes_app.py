@@ -59,7 +59,7 @@ def main():
 
             if submitted:
                 if not GOOGLE_API_KEY:
-                    st.warning('⚠️Please enter your Google AI Studio API on the sidebar.', icon='⚠')
+                    st.warning('⚠️Please enter your Google AI Studio API on the sidebar.')
                 else:
                     # save uploaded audio file as tmp file
                     with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as temp_file:
