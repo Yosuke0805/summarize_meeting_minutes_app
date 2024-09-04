@@ -59,33 +59,34 @@ def main():
 
             if submitted:
                 if not GOOGLE_API_KEY:
-                    st.warning('⚠️Please enter your Google AI Studio API on the sidebar.', icon='⚠') 
-                # save uploaded audio file as tmp file
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as temp_file:
-                    temp_file.write(uploaded_file.read())
-                    temp_file_path = temp_file.name
-                    logger.info(f"Temporary file created at {temp_file_path}")
-                    # print('temp path:', temp_file_path)
-                    # print('temp file type:',type(temp_file_path))
+                    st.warning('⚠️Please enter your Google AI Studio API on the sidebar.', icon='⚠')
+                else:
+                    # save uploaded audio file as tmp file
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as temp_file:
+                        temp_file.write(uploaded_file.read())
+                        temp_file_path = temp_file.name
+                        logger.info(f"Temporary file created at {temp_file_path}")
+                        # print('temp path:', temp_file_path)
+                        # print('temp file type:',type(temp_file_path))
 
-                try:
-                    summary, transcription = summarize_from_audio_file(temp_file_path)
-                    # Deleting tmp file
-                    os.remove(temp_file_path)
-                    logger.info(f"Temporary file {temp_file_path} deleted")
-                    # Display the summary
-                    st.title("Summary:")
-                    st.markdown(summary)
-                    st.markdown(f"## Meeting minutes \n {transcription}")
-                except ResourceExhausted as e:
-                    st.error("Resource Exhausted: The request exceeded the available resources. Please try again later.", icon="🚨")
-                    st.error(f"Details: {str(e)}")
-                    logger.error(f"ResourceExhausted: {str(e)}")
-                except Exception as e:
-                    st.error("An unexpected error occurred.", icon="🚨")
-                    st.error(f"Details: {str(e)}")
-                    logger.error(f"Unexpected error: {str(e)}")
-                    traceback.print_exc()
+                    try:
+                        summary, transcription = summarize_from_audio_file(temp_file_path)
+                        # Deleting tmp file
+                        os.remove(temp_file_path)
+                        logger.info(f"Temporary file {temp_file_path} deleted")
+                        # Display the summary
+                        st.title("Summary:")
+                        st.markdown(summary)
+                        st.markdown(f"## Meeting minutes \n {transcription}")
+                    except ResourceExhausted as e:
+                        st.error("Resource Exhausted: The request exceeded the available resources. Please try again later.", icon="🚨")
+                        st.error(f"Details: {str(e)}")
+                        logger.error(f"ResourceExhausted: {str(e)}")
+                    except Exception as e:
+                        st.error("An unexpected error occurred.", icon="🚨")
+                        st.error(f"Details: {str(e)}")
+                        logger.error(f"Unexpected error: {str(e)}")
+                        traceback.print_exc()
     except Exception:
         st.error("An unexpected error occurred in the main function.", icon="🚨")
         st.error(f"Details: {str(e)}")
