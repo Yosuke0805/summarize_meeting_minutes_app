@@ -87,7 +87,7 @@ def main():
                         st.error(f"Details: {str(e)}")
                         logger.error(f"Unexpected error: {str(e)}")
                         traceback.print_exc()
-    except Exception:
+    except Exception as e:
         st.error("An unexpected error occurred in the main function.", icon="🚨")
         st.error(f"Details: {str(e)}")
         logger.error(f"Unexpected error in main: {str(e)}")
