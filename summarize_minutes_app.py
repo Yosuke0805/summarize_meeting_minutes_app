@@ -98,6 +98,7 @@ def main():
 # ------------------------------------------------------------
 # ★★★★★★  functions ★★★★★★
 # ------------------------------------------------------------
+@st.cache_data
 def transcribe_audio_file(audio_file, original_language, translating_language):
     """
     helper function for summarize_from_audio_file to transcribe audio and translate it from original_language to translating_language.
@@ -142,6 +143,7 @@ def transcribe_audio_file(audio_file, original_language, translating_language):
         logger.error(f"Error in transcribe_audio_file: {str(e)}")
         raise
 
+@st.cache_data
 def summary_prompt_response(transcription, translating_language):
     """
     helper function for summarize_from_audio_file to summarize transcription.
