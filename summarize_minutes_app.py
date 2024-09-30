@@ -77,7 +77,8 @@ def main():
                         # Display the summary
                         st.title("Summary:")
                         st.markdown(summary)
-                        st.markdown(f"## Meeting minutes \n {transcription}")
+                        st.title("Meeting minutes:")
+                        st.markdown(transcription)
                     except ResourceExhausted as e:
                         st.error("Resource Exhausted: The request exceeded the available resources. Please try again later.", icon="🚨")
                         st.error(f"Details: {str(e)}")
@@ -153,12 +154,15 @@ def summary_prompt_response(transcription):
         transcription(str): Transcription.
     """
     try:
-        chat = model.start_chat(enable_automatic_function_calling=True)
+        chat = model.start_chat(enable_automatic_function_calling=True, translating_language)
         prompt = f"""
         ### request
-        Based on the meeting minutes below, please do the two things and return as markdown by following format in the same language as meeting minutes:
+        Based on the meeting minutes below, please do the two things and return as markdown by following format.
         1. Create a bulleted summary for the minutes. The summary should include important points.
         2. Create a TODO list. If there are none, do not create a TODO list.
+
+        ### caution
+        - Please return output in {translating_language}
 
         ### format example
         ## Meeting summary
@@ -190,7 +194,7 @@ def summarize_from_audio_file(audio_file, original_language, translating_languag
     """
     try:
         transcription = transcribe_audio_file(audio_file, original_language, translating_language)
-        summary = summary_prompt_response(transcription)
+        summary = summary_prompt_response(transcription, translating_language)
         return summary, transcription
     except Exception as e:
         logger.error(f"Error in summarize_from_audio_file: {str(e)}")
