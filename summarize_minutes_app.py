@@ -70,7 +70,7 @@ def main():
                         # print('temp file type:',type(temp_file_path))
 
                     try:
-                        summary, transcription = summarize_from_audio_file(temp_file_path)
+                        summary, transcription = summarize_from_audio_file(temp_file_path, original_language, translating_language)
                         # Deleting tmp file
                         os.remove(temp_file_path)
                         logger.info(f"Temporary file {temp_file_path} deleted")
@@ -97,7 +97,7 @@ def main():
 # ------------------------------------------------------------
 # ★★★★★★  functions ★★★★★★
 # ------------------------------------------------------------
-def transcribe_audio_file(audio_file):
+def transcribe_audio_file(audio_file, original_language, translating_language):
     try:
         # upload audio file by using File API
         audio_file = genai.upload_file(audio_file)
