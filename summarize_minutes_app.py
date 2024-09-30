@@ -142,7 +142,7 @@ def transcribe_audio_file(audio_file, original_language, translating_language):
         logger.error(f"Error in transcribe_audio_file: {str(e)}")
         raise
 
-def summary_prompt_response(transcription):
+def summary_prompt_response(transcription, translating_language):
     """
     helper function for summarize_from_audio_file to summarize transcription.
 
@@ -154,7 +154,7 @@ def summary_prompt_response(transcription):
         transcription(str): Transcription.
     """
     try:
-        chat = model.start_chat(enable_automatic_function_calling=True, translating_language)
+        chat = model.start_chat(enable_automatic_function_calling=True)
         prompt = f"""
         ### request
         Based on the meeting minutes below, please do the two things and return as markdown by following format.
