@@ -30,7 +30,7 @@ def main():
 
     try:
         # Set the title and description
-        st.title("📋 Creating Meeting Minutes from Audio")
+        st.title("📋 Summarizing Meeting Minutes from Audio")
 
         # set Gemini API
         GOOGLE_API_KEY = st.sidebar.text_input("Input your Google AI Studio API", type="password")
