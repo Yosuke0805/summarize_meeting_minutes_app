@@ -98,6 +98,17 @@ def main():
 # ★★★★★★  functions ★★★★★★
 # ------------------------------------------------------------
 def transcribe_audio_file(audio_file, original_language, translating_language):
+    """
+    helper function for summarize_from_audio_file to transcribe audio and translate it from original_language to translating_language.
+
+    Args:
+        audio_file(WAV, MP3, OGG, M4A): Audio file.
+        original_language (str): Original language in audio file.
+        translating_language (str): The translating language.
+
+    Returns:
+        transcription(str): Transcription.
+    """
     try:
         # upload audio file by using File API
         audio_file = genai.upload_file(audio_file)
@@ -131,6 +142,16 @@ def transcribe_audio_file(audio_file, original_language, translating_language):
         raise
 
 def summary_prompt_response(transcription):
+    """
+    helper function for summarize_from_audio_file to summarize transcription.
+
+    Args:
+        transcription (str): Transcription.
+        summary (str): Summary of the transcription.
+
+    Returns:
+        transcription(str): Transcription.
+    """
     try:
         chat = model.start_chat(enable_automatic_function_calling=True)
         prompt = f"""
@@ -155,9 +176,20 @@ def summary_prompt_response(transcription):
         logger.error(f"Error in summary_prompt_response: {str(e)}")
         raise
 
-def summarize_from_audio_file(audio_file):
+def summarize_from_audio_file(audio_file, original_language, translating_language):
+    """
+    main function to transcribe audio and summarize it.
+
+    Args:
+        audio_file(WAV, MP3, OGG, M4A): Audio file.
+        original_language (str): Original language in audio file.
+        translating_language (str): The translating language.
+    Returns:
+        summary(str): Summary of the transcription.
+        transcription(str): Transcription.
+    """
     try:
-        transcription = transcribe_audio_file(audio_file)
+        transcription = transcribe_audio_file(audio_file, original_language, translating_language)
         summary = summary_prompt_response(transcription)
         return summary, transcription
     except Exception as e:
