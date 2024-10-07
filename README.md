@@ -1,5 +1,5 @@
 # Summary
-Application to summarize meeting menutes by gemini API
+📋 (Application to create meeting menutes)[https://summarizemeetingminutesapp-bzha9c2qlxsveh46xmeebm.streamlit.app/]
 
 # Background
 Since I was involving in an international meeting and had to create meeting minutes in English, 
